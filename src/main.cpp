@@ -23,6 +23,9 @@ int main(void)
         } else if (cmd == "assign_mission") {
             cin >> args[0] >> args[1];
             taxi.assign_mission(args[0], args[1]);
+        } else if (cmd == "record_ride") {
+            cin >> args[0] >> args[1] >> args[2] >> args[3];
+            taxi.record_ride(args[0], args[1], args[2], args[3]);
         }
     }
 }

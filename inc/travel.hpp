@@ -11,6 +11,8 @@ public:
     Travel(int _start_ts, int _end_ts, int _driver_id, int _distance);
     Travel();
     virtual ~Travel();
+    int get_duration(void);
+    int get_distance(void);
 };
 
 #endif /* __TRAVEL_HPP */

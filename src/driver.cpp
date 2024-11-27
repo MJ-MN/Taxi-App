@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 
 #include "../inc/driver.hpp"
@@ -39,4 +40,18 @@ bool Driver::has_mission(int mission_id)
 void Driver::add_mission(Mission* mission)
 {
     this->missions.push_back(mission);
+}
+
+void Driver::add_travel(Travel* travel)
+{
+    this->travels.push_back(travel);
+}
+
+void Driver::print_completed_missions(void)
+{
+    for (Mission* mission : this->missions) {
+        if (mission->is_completed(this->travels)) {
+            mission->print();
+        }
+    }
 }

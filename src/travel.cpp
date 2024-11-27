@@ -17,3 +17,13 @@ Travel::~Travel()
 {
     
 }
+
+int Travel::get_duration(void)
+{
+    return (this->end_ts - this->start_ts);
+}
+
+int Travel::get_distance(void)
+{
+    return this->distance;
+}

@@ -18,7 +18,6 @@ class Taxi {
 private:
     std::vector<Driver*> drivers;
     std::vector<Mission*> missions;
-    std::vector<Travel*> travels;
 
     Mission* find_mission_by_id(int id);
     Driver* find_driver_by_id(int id);
@@ -32,6 +31,8 @@ public:
     void add_count_mission(std::string mission_id, std::string start_ts,
         std::string end_ts, std::string target_num, std::string reward);
     void assign_mission(std::string mission_id, std::string driver_id);
+    void record_ride(std::string start_ts, std::string end_ts,
+        std::string driver_id, std::string distance);
 };
 
 #endif /* __TAXI_HPP */
