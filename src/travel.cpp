@@ -18,12 +18,22 @@ Travel::~Travel()
     
 }
 
-int Travel::get_duration(void)
+int Travel::get_duration(void) const
 {
     return (this->end_ts - this->start_ts);
 }
 
-int Travel::get_distance(void)
+int Travel::get_distance(void) const
 {
     return this->distance;
+}
+
+int Travel::get_start_ts(void) const
+{
+    return this->start_ts;
+}
+
+int Travel::get_end_ts(void) const
+{
+    return this->end_ts;
 }

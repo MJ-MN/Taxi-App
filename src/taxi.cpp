@@ -12,10 +12,15 @@ Taxi::Taxi()
 
 Taxi::~Taxi()
 {
-
+    for (auto driver : this->drivers) {
+        delete driver;
+    }
+    for (auto mission : this->missions) {
+        delete mission;
+    }
 }
 
-Mission* Taxi::find_mission_by_id(int id)
+Mission* Taxi::find_mission_by_id(int id) const
 {
     for (Mission* mission : this->missions) {
         if (mission->get_id() == id) {
@@ -25,7 +30,7 @@ Mission* Taxi::find_mission_by_id(int id)
     return NULL;
 }
 
-Driver* Taxi::find_driver_by_id(int id)
+Driver* Taxi::find_driver_by_id(int id) const
 {
     for (Driver* driver : this->drivers) {
         if (driver->get_id() == id) {
@@ -57,7 +62,7 @@ void Taxi::add_time_mission(std::string mission_id, std::string start_ts,
             _target_time >= 0 &&
             _reward >= 0) {
             TimeMission* timeMission = new TimeMission(_mission_id, _start_ts,
-                _end_ts, _reward, _target_time);
+                _end_ts, -1, _reward, _target_time);
             this->missions.push_back(timeMission);
             cout << OK << endl;
         } else {
@@ -90,7 +95,7 @@ void Taxi::add_distance_mission(std::string mission_id, std::string start_ts,
             _target_dist >= 0 &&
             _reward >= 0) {
             DistanceMission* distanceMission = new DistanceMission(_mission_id, _start_ts,
-                _end_ts, _reward, _target_dist);
+                _end_ts, -1, _reward, _target_dist);
             this->missions.push_back(distanceMission);
             cout << OK << endl;
         } else {
@@ -123,7 +128,7 @@ void Taxi::add_count_mission(std::string mission_id, std::string start_ts,
             _target_num >= 0 &&
             _reward >= 0) {
             CountMission* countMission = new CountMission(_mission_id, _start_ts,
-                _end_ts, _reward, _target_num);
+                _end_ts, -1, _reward, _target_num);
             this->missions.push_back(countMission);
             cout << OK << endl;
         } else {
@@ -177,13 +182,29 @@ void Taxi::record_ride(std::string start_ts, std::string end_ts,
     int _driver_id = stoi(driver_id);
     int _distance = stoi(distance);
 
-    if (start_ts <= end_ts) {
+    if (_start_ts <= _end_ts) {
         cout << "completed missions for driver " << driver_id << ":" << endl;
         Driver* driver = this->find_driver_by_id(_driver_id);
-        Travel* travel = new Travel(_start_ts, _end_ts, _driver_id, _distance);
-        driver->add_travel(travel);
+        driver->add_travel(Travel(_start_ts, _end_ts, _driver_id, _distance));
         driver->print_completed_missions();
     } else {
         cout << INVALID_ARGUMENTS << endl;
+    }
+}
+
+void Taxi::show_missions_status(string driver_id) const
+{
+    if (driver_id.empty()) {
+        cout << INVALID_ARGUMENTS << endl;
+        return;
+    }
+    int _driver_id = stoi(driver_id);
+    Driver* driver = this->find_driver_by_id(_driver_id);
+
+    if (driver != NULL && driver->has_any_mission()) {
+        cout << "missions status for driver " << driver_id << ":" << endl;
+        driver->print_missions_status();
+    } else {
+        cout << DRIVER_MISSION_NOT_FOUND << endl;
     }
 }

@@ -13,14 +13,15 @@ const std::string DUPLICATE_MISSION_ID = "DUPLICATE_MISSION_ID";
 const std::string INVALID_ARGUMENTS = "INVALID_ARGUMENTS";
 const std::string MISSION_NOT_FOUND = "MISSION_NOT_FOUND";
 const std::string DUPLICATE_DRIVER_MISSION = "DUPLICATE_DRIVER_MISSION";
+const std::string DRIVER_MISSION_NOT_FOUND = "DRIVER_MISSION_NOT_FOUND";
 
 class Taxi {
 private:
     std::vector<Driver*> drivers;
     std::vector<Mission*> missions;
 
-    Mission* find_mission_by_id(int id);
-    Driver* find_driver_by_id(int id);
+    Mission* find_mission_by_id(int id) const;
+    Driver* find_driver_by_id(int id) const;
 public:
     Taxi();
     ~Taxi();
@@ -33,6 +34,7 @@ public:
     void assign_mission(std::string mission_id, std::string driver_id);
     void record_ride(std::string start_ts, std::string end_ts,
         std::string driver_id, std::string distance);
+    void show_missions_status(std::string driver_id) const;
 };
 
 #endif /* __TAXI_HPP */
