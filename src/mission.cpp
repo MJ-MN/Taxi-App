@@ -69,7 +69,7 @@ Mission* TimeMission::clone(void) const
     return new TimeMission(*this);
 }
 
-bool TimeMission::is_completed(vector<Travel*> travels) const
+bool TimeMission::is_completed(const vector<Travel*> travels) const
 {
     int travel_time = 0;
 
@@ -104,7 +104,7 @@ Mission* DistanceMission::clone(void) const
     return new DistanceMission(*this);
 }
 
-bool DistanceMission::is_completed(vector<Travel*> travels) const
+bool DistanceMission::is_completed(const vector<Travel*> travels) const
 {
     int travel_dist = 0;
 
@@ -139,7 +139,7 @@ Mission* CountMission::clone(void) const
     return new CountMission(*this);
 }
 
-bool CountMission::is_completed(vector<Travel*> travels) const
+bool CountMission::is_completed(const vector<Travel*> travels) const
 {
     int travel_count = 0;
 

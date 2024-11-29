@@ -24,6 +24,8 @@ private:
     Driver* find_driver_by_id(int id) const;
 public:
     Taxi();
+    Taxi(const Taxi& taxi);
+    Taxi& operator=(const Taxi& taxi);
     ~Taxi();
     void add_time_mission(std::string mission_id, std::string start_ts,
         std::string end_ts, std::string target_time, std::string reward);

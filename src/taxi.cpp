@@ -20,6 +20,37 @@ Taxi::~Taxi()
     }
 }
 
+Taxi::Taxi(const Taxi& taxi)
+{
+    for (Driver* _driver : taxi.drivers) {
+        Driver* driver = new Driver(*_driver);
+        this->drivers.push_back(driver);
+    }
+    for (Mission* _mission : taxi.missions) {
+        Mission* mission = _mission->clone();
+        this->missions.push_back(mission);
+    }
+}
+
+Taxi& Taxi::operator=(const Taxi& taxi)
+{
+    for (Driver* _driver : taxi.drivers) {
+        delete _driver;
+    }
+    for (Driver* _driver : taxi.drivers) {
+        Driver* driver = new Driver(*_driver);
+        this->drivers.push_back(driver);
+    }
+    for (Mission* _mission : this->missions) {
+        delete _mission;
+    }
+    for (Mission* _mission : taxi.missions) {
+        Mission* mission = _mission->clone();
+        this->missions.push_back(mission);
+    }
+    return *this;
+}
+
 Mission* Taxi::find_mission_by_id(int id) const
 {
     for (Mission* mission : this->missions) {

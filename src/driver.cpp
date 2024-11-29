@@ -18,6 +18,39 @@ Driver::Driver()
 
 }
 
+Driver::Driver(const Driver& driver)
+{
+    this->id = driver.id;
+    for (Travel* _travel : driver.travels) {
+        Travel* travel = new Travel(*_travel);
+        this->travels.push_back(travel);
+    }
+    for (Mission* _mission : driver.missions) {
+        Mission* mission = _mission->clone();
+        this->missions.push_back(mission);
+    }
+}
+
+Driver& Driver::operator=(const Driver& driver)
+{
+    this->id = driver.id;
+    for (Travel* _travel : this->travels) {
+        delete _travel;
+    }
+    for (Travel* trav : driver.travels) {
+        Travel* travel = new Travel(*trav);
+        this->travels.push_back(travel);
+    }
+    for (Mission* _mission : this->missions) {
+        delete _mission;
+    }
+    for (Mission* _mission : driver.missions) {
+        Mission* mission = _mission->clone();
+        this->missions.push_back(mission);
+    }
+    return *this;
+}
+
 Driver::~Driver()
 {
     for (auto travel : this->travels) {
@@ -43,7 +76,7 @@ bool Driver::has_mission(int mission_id) const
     return false;
 }
 
-void Driver::add_mission(Mission* _mission)
+void Driver::add_mission(const Mission* _mission)
 {
     Mission* mission = _mission->clone();
     list<Mission*>::iterator it = this->missions.begin();
