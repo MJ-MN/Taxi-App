@@ -79,13 +79,13 @@ bool Driver::has_mission(int mission_id) const
 void Driver::add_mission(const Mission* _mission)
 {
     Mission* mission = _mission->clone();
-    list<Mission*>::iterator it = this->missions.begin();
-    for (Mission* miss : this->missions) {
-        if (miss->get_start_ts() > mission->get_start_ts()) {
+    for (list<Mission*>::iterator it = this->missions.begin();
+            it != this->missions.end();
+            ++it) {
+        if ((*it)->get_start_ts() > (*it)->get_start_ts()) {
             this->missions.insert(it, mission);
             return;
         }
-        ++it;
     }
     this->missions.push_back(mission);
 }
